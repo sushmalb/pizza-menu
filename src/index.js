@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import "./index.css";
 
 const pizzaData = [
@@ -69,7 +69,14 @@ const Menu = () => {
   return (
     <div className="menu">
       <h2>Our Menu</h2>
-      <Pizza
+
+      <ul className="pizzas">
+        {pizzaData.map((p) => (
+          <Pizza pizzaObj={p} key={p.name} />
+        ))}
+      </ul>
+
+      {/* <Pizza
         name={pizzaData[2].name}
         ingredients={pizzaData[2].ingredients}
         photoName={pizzaData[2].photoName}
@@ -78,26 +85,35 @@ const Menu = () => {
         name={pizzaData[0].name}
         ingredients={pizzaData[0].ingredients}
         photoName={pizzaData[0].photoName}
-      />
+      /> */}
     </div>
   );
 };
 const Pizza = (props) => {
   console.log(props);
   return (
-    <>
-      <img src={props.photoName} alt="pizza"></img>
-      <h3>{props.name}</h3>
-      <p>{props.ingredients}</p>
-    </>
+    <li className="pizza">
+      <img src={props.pizzaObj.photoName} alt="pizza"></img>
+      <h3>{props.pizzaObj.name}</h3>
+      <p>{props.pizzaObj.ingredients}</p>
+    </li>
   );
 };
 
 const Footer = () => {
+  const hr = new Date().getHours();
+  console.log(hr);
+  const isOpen = hr >= 10 && hr <= 21;
+  console.log(isOpen);
   return (
-    <div className="footer">
-      <h3>We are currently Open !!</h3>
-    </div>
+    <footer className="footer">
+      {isOpen && (
+        <div className="order">
+          <p>We are open till 9pm.Order online</p>
+          <button className="btn">Order</button>
+        </div>
+      )}
+    </footer>
   );
 };
 
